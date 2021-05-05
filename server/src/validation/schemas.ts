@@ -12,8 +12,8 @@ export const registerSchema = Joi.object({
 
 export const updateSchema = Joi.object({
   username: Joi.string().lowercase().min(3).max(30).required(),
-  password: Joi.string().lowercase().min(3).max(30).required(),
+  password: Joi.string().min(3).max(30).required(),
   roomPassword: Joi.string().allow("").min(0).max(30),
-  changedPassword: Joi.string().lowercase().min(3).max(30).required(),
+  changedPassword: Joi.string().min(3).max(30).required(),
   changedUsername: Joi.string().lowercase().min(3).max(30).required(),
 });

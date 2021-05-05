@@ -19,8 +19,7 @@ async function main() {
   app.use(userRouter);
 
   app.use(apiErrorHandler);
-  app.listen(process.env.PORT || 5000, () => console.log("server is running"));
-
   await createConnection();
+  app.listen(process.env.PORT || 5000, () => console.log("server is running"));
 }
 main();

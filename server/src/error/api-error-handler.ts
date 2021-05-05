@@ -1,10 +1,17 @@
-import { Response } from "express";
+import { NextFunction, Response, Request } from "express";
+import ApiError from "./ApiError";
 
-export function apiErrorHandler(err: any, res: Response) {
+export function apiErrorHandler(
+  err: any,
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
   if (err instanceof ApiError) {
     return res.status(err.code).json({
       message: err.message,
     });
   }
+  console.log(err);
   return res.status(400).json({ message: "sth went wrong" });
 }

@@ -11,3 +11,5 @@ class ApiError {
     return new ApiError(400, msg);
   }
 }
+
+export default ApiError;

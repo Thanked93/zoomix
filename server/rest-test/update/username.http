@@ -1,0 +1,10 @@
+POST http://localhost:5000/update 
+Content-Type: application/json
+
+{
+    "username":"Cat",
+    "password":"Fisch123",
+    "changedUsername":"Cat2",
+    "changedPassword":"Fisch123",
+    "roomPassword":""
+}

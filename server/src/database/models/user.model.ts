@@ -15,7 +15,6 @@ const userSchema: Schema = new Schema({
   password: {
     type: String,
     minlength: [8, "The password needs to have at least 8 characters"],
-    maxLength: [50, "The password should not have more than 50 characters"],
     required: true,
   },
   room: {
@@ -31,7 +30,10 @@ const userSchema: Schema = new Schema({
 });
 
 userSchema.method("comparePassword", async function (password: string) {
-  return await verify(this.get("password"), password);
+  console.log(this.get("password"), password);
+  const res = await verify(this.get("password"), password);
+  console.log(res);
+  return res;
 });
 
 userSchema.static("hashPassword", async function (password: string) {

@@ -5,6 +5,7 @@ import {
   updateSchema,
 } from "../validation/schemas";
 import { v4 } from "uuid";
+import ApiError from "../error/ApiError";
 import User from "../database/models/user.model";
 
 export class UserController {
@@ -19,9 +20,9 @@ export class UserController {
       // look if name already exists
       const user = await User.findOne({ username: result.username });
       if (user) {
-        next(ApiError.badRequest('"Username" already exists'));
-        return;
+        throw ApiError.badRequest('"Username" already exists');
       }
+
       // create new User
       const userResult = new User({
         username: result.username,
@@ -35,8 +36,11 @@ export class UserController {
         roomPassword: userResult.roomPassword,
       });
     } catch (error) {
-      if (error.isJoi) error.status = 400;
-      next(error);
+      if (error.isJoi) {
+        next(ApiError.badRequest(error.message));
+      } else {
+        next(error);
+      }
     }
   }
 
@@ -62,8 +66,11 @@ export class UserController {
         roomPassword: user.roomPassword,
       });
     } catch (error) {
-      if (error.isJoi) error.status = 400;
-      next(error);
+      if (error.isJoi) {
+        next(ApiError.badRequest(error.message));
+      } else {
+        next(error);
+      }
     }
   }
 
@@ -78,20 +85,24 @@ export class UserController {
         return;
       }
       // check password
+      console.log("Comparing");
       const matchingPw = await user.comparePassword(result.password);
       if (!matchingPw) {
         next(ApiError.badRequest("Username or password wrong"));
         return;
       }
+      console.log("Comparing done");
       // find and update
       await User.updateOne(
         { username: result.username },
         {
-          password: result.changedPassword,
+          password: await User.hashPassword(result.changedPassword),
           username: result.changedUsername,
           roomPassword: result.roomPassword,
         }
       );
+      console.log("Updated");
+
       // return
       return res.status(200).json({
         username: result.changedUsername,
@@ -99,8 +110,11 @@ export class UserController {
         roomPassword: result.roomPassword,
       });
     } catch (error) {
-      if (error.isJoi) error.status = 400;
-      next(error);
+      if (error.isJoi) {
+        next(ApiError.badRequest(error.message));
+      } else {
+        next(error);
+      }
     }
   }
 }

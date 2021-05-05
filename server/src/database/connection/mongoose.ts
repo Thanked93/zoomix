@@ -6,7 +6,5 @@ export async function createConnection() {
     useCreateIndex: true,
     useUnifiedTopology: true,
   });
-  await connection.once("open", () => {
-    console.log("connection to mongoose established");
-  });
+  await connection.once("open", () => {});
 }
