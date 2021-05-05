@@ -1,5 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { loginSchema, registerSchema } from "../validation/schemas";
+import {
+  loginSchema,
+  registerSchema,
+  updateSchema,
+} from "../validation/schemas";
 import { v4 } from "uuid";
 import User from "../database/models/user.model";
 
@@ -62,4 +66,43 @@ export class UserController {
       next(error);
     }
   }
+
+  public static async update(req: Request, res: Response, next: NextFunction) {
+    try {
+      // validate input
+      const result = await updateSchema.validateAsync(req.body);
+      // Check for user
+      const user = await User.findOne({ username: result.username });
+      if (!user) {
+        next(ApiError.badRequest("Username or password wrong"));
+        return;
+      }
+      // check password
+      const matchingPw = await user.comparePassword(result.password);
+      if (!matchingPw) {
+        next(ApiError.badRequest("Username or password wrong"));
+        return;
+      }
+      // find and update
+      await User.updateOne(
+        { username: result.username },
+        {
+          password: result.changedPassword,
+          username: result.changedUsername,
+          roomPassword: result.roomPassword,
+        }
+      );
+      // return
+      return res.status(200).json({
+        username: result.changedUsername,
+        room: user.room,
+        roomPassword: result.roomPassword,
+      });
+    } catch (error) {
+      if (error.isJoi) error.status = 400;
+      next(error);
+    }
+  }
 }
+
+export default UserController;
