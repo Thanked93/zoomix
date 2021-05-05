@@ -85,13 +85,11 @@ export class UserController {
         return;
       }
       // check password
-      console.log("Comparing");
       const matchingPw = await user.comparePassword(result.password);
       if (!matchingPw) {
         next(ApiError.badRequest("Username or password wrong"));
         return;
       }
-      console.log("Comparing done");
       // find and update
       await User.updateOne(
         { username: result.username },

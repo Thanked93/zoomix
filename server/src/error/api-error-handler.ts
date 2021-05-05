@@ -12,6 +12,5 @@ export function apiErrorHandler(
       message: err.message,
     });
   }
-  console.log(err);
   return res.status(400).json({ message: "sth went wrong" });
 }

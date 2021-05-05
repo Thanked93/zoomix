@@ -1,0 +1,8 @@
+import React from "react";
+import Navbar from "../components/navbar/Navbar";
+
+export const NavbarContainer: React.FC = () => {
+  return <Navbar>Hell</Navbar>;
+};
+
+export default NavbarContainer;
