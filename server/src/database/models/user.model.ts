@@ -1,7 +1,9 @@
 import { model, Schema } from "mongoose";
-import { hash } from "argon2";
+import { hash, verify } from "argon2";
 
-const userSchema = new Schema({
+import { IUser, IUserModel } from "./interfaces/user";
+
+const userSchema: Schema = new Schema({
   username: {
     type: String,
     unique: true,
@@ -21,18 +23,21 @@ const userSchema = new Schema({
     unique: true,
     required: true,
   },
-  roompassword: {
+  roomPassword: {
     type: String,
     required: false,
     default: "",
   },
 });
 
-userSchema.pre("save", async function () {
-  if (!this.isModified("password")) {
-    const hashedPassword = await hash(this.get("password"));
-    this.set("password", hashedPassword);
-  }
+userSchema.method("comparePassword", async function (password: string) {
+  return await verify(this.get("password"), password);
 });
 
-export default model("User", userSchema);
+userSchema.static("hashPassword", async function (password: string) {
+  return await hash(password);
+});
+
+export const User: IUserModel = model<IUser, IUserModel>("User", userSchema);
+
+export default User;
