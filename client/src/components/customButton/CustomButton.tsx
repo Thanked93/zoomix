@@ -2,12 +2,16 @@ import React, { ReactNode } from "react";
 import { Button } from "./styles";
 
 interface ButtonProps {
-  func: any;
   children: ReactNode;
+  func?: any;
 }
 
-const CustomButton = ({ func, children, ...restProps }: ButtonProps) => {
-  return <Button>{children}</Button>;
+const CustomButton = ({ func = null, children, ...restProps }: ButtonProps) => {
+  return (
+    <Button onClick={func} {...restProps}>
+      {children}
+    </Button>
+  );
 };
 
 export default CustomButton;

@@ -8,4 +8,5 @@ export const Main = styled.div`
 export const PageContent = styled.div`
   grid-row: 2;
   padding: 2%;
+  background-color: ${(props) => props.theme.mainBg};
 `;
