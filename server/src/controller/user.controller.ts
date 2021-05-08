@@ -16,19 +16,24 @@ export class UserController {
   ) {
     try {
       // validate input
+
       const result = await registerSchema.validateAsync(req.body);
       // look if name already exists
       const user = await User.findOne({ username: result.username });
+
       if (user) {
-        throw ApiError.badRequest('"Username" already exists');
+        throw ApiError.badRequest('Username" already exists');
       }
 
       // create new User
-      const userResult = new User({
+      const userResult = await new User({
         username: result.username,
         password: await User.hashPassword(result.password),
         room: await v4(),
       });
+      if (!userResult) {
+        throw ApiError.badRequest("We are sorry");
+      }
       await userResult.save();
       return res.status(200).json({
         username: userResult.username,
