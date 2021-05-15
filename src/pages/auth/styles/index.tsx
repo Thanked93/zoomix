@@ -15,7 +15,7 @@ export const Content = styled.div`
   border-radius: 10px;
 `;
 
-export const Title = styled.div`
+export const Title = styled.h1`
   display: flex;
   justify-content: center;
   padding: 0.25em;

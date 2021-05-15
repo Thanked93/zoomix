@@ -1,12 +1,5 @@
 import styled from "styled-components";
 
-export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: auto;
-  width: 20em;
-`;
-
 export const Placeholder = styled.span`
   position: absolute;
   top: 1em;
@@ -14,6 +7,13 @@ export const Placeholder = styled.span`
   font-size: ${(props) => props.theme.fontSizes.medium};
   color: #666;
   transition: top 0.3s ease, font-size 0.3s ease, color 0.3s ease;
+  @media (max-width: 768px) {
+    max-width: 15em;
+  }
+  @media (max-width: 420px) {
+    top: 2em;
+    font-size: ${(props) => props.theme.fontSizes.small};
+  }
 `;
 
 export const Input = styled.input<{ valid: boolean }>`
@@ -40,19 +40,23 @@ export const Input = styled.input<{ valid: boolean }>`
       content: ":";
     }
   }
+
+  @media (max-width: 768px) {
+    max-width: 15em;
+  }
+  @media (max-width: 420px) {
+    max-width: 8em;
+  }
 `;
 
 export const Field = styled.label`
   position: relative;
   height: 3em;
-  width: 20em;
+  max-width: 20em;
   padding-top: 1em;
   padding-bottom: 0.25em;
-`;
 
-export const Error = styled.label`
-  font-size: ${(props) => props.theme.fontSizes.small};
-  color: red;
-  min-height: 1.5em;
-  white-space: pre-wrap;
+  @media (max-width: 420px) {
+    max-width: auto;
+  }
 `;
