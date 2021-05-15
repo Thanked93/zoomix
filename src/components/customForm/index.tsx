@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import CustomInput from "../customInput";
-import { Button, Form } from "./styles";
+import { Button, Form, Message } from "./styles";
 
 interface ChildProps {
   children: ReactNode;
@@ -22,7 +22,6 @@ interface FormInputProps {
   onChange: React.Dispatch<React.SetStateAction<string>>;
   value: string;
   type?: string;
-  error?: string;
   placeholder?: string;
 }
 
@@ -30,7 +29,6 @@ CustomForm.Input = function CustomFormInput({
   onChange,
   value,
   type = "text",
-  error = "",
   placeholder = "",
   ...restProps
 }: FormInputProps) {
@@ -39,7 +37,6 @@ CustomForm.Input = function CustomFormInput({
       type={type}
       onChange={onChange}
       placeholder={placeholder}
-      error={error}
       value={value}
       {...restProps}
     />
@@ -59,6 +56,22 @@ CustomForm.SubmitButton = function CustomFormSubmit({
     <Button disabled={disabled} {...restProps}>
       {children}
     </Button>
+  );
+};
+
+interface MessageProps extends ChildProps {
+  isError?: boolean;
+}
+
+CustomForm.Message = function CustomFormMessage({
+  children,
+  isError = false,
+  ...restProps
+}: MessageProps) {
+  return (
+    <Message isError={isError} {...restProps}>
+      {children}
+    </Message>
   );
 };
 

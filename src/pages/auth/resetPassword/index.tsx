@@ -1,33 +1,26 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router";
 import CustomForm from "../../../components/customForm";
 import { useAuth } from "../../../context/auth";
 import { Content, Footer, FooterLink, Outer, Title } from "../styles";
 
-const Login: React.FC = () => {
-  //input state
+const ResetPassword = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  //Error state
   const [error, setError] = useState("");
-  // Loading state
+  const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
-  //
-  const { loginWithEmailPassword } = useAuth();
-  const history = useHistory();
+  const { resetPassword } = useAuth();
 
-  //Submit
   async function submit(e: React.SyntheticEvent) {
     e.preventDefault();
     setError("");
+    setMessage("Check your inbox.");
     try {
       setLoading(true);
-      await loginWithEmailPassword(email, password);
-      history.push("/dashboard");
+      await resetPassword(email);
+      setMessage("Check your inbox.");
     } catch (error) {
-      setError("Authentication failed.");
-
+      setError("Failed to reset the password");
       setLoading(false);
     }
   }
@@ -35,41 +28,25 @@ const Login: React.FC = () => {
   return (
     <Outer>
       <Content>
-        <Title>Login</Title>
+        <Title>Forgot password</Title>
         <CustomForm onSubmit={submit}>
           <CustomForm.Input
             value={email}
             placeholder="Email"
             onChange={setEmail}
           />
-          <CustomForm.Input
-            value={password}
-            placeholder="Password"
-            type="password"
-            onChange={setPassword}
-          />
           <CustomForm.Message isError={true}>{error}</CustomForm.Message>
-
-          {error && (
-            <FooterLink
-              to="/reset-password"
-              style={{ width: "100%", marginTop: "1em" }}
-            >
-              Reset password
-            </FooterLink>
-          )}
+          <CustomForm.Message isError={false}>{message}</CustomForm.Message>
           <CustomForm.SubmitButton disabled={loading}>
-            submit
+            Reset
           </CustomForm.SubmitButton>
         </CustomForm>
-
         <Footer>
-          Don't have an account yet?{" "}
-          <FooterLink to="/register">Register</FooterLink>
+          Remember the password? <FooterLink to="/login">Login</FooterLink>
         </Footer>
       </Content>
     </Outer>
   );
 };
 
-export default Login;
+export default ResetPassword;

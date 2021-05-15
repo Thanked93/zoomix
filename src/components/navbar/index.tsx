@@ -1,4 +1,6 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
+import { useHistory } from "react-router";
+import { useAuth } from "../../context/auth";
 import {
   Brand,
   Item,
@@ -98,17 +100,19 @@ Navbar.Link = function NavbarLink({
   );
 };
 
-interface ButtonProps extends ChildProps {
-  logout(): void;
-}
+Navbar.Logout = function NavbarButton({ children, ...restProps }: ChildProps) {
+  const { logout } = useAuth();
+  const history = useHistory();
 
-Navbar.Logout = function NavbarButton({
-  children,
-  logout,
-  ...restProps
-}: ButtonProps) {
+  async function handleLogout() {
+    try {
+      await logout();
+      history.push("/login");
+    } catch (error) {}
+  }
+
   return (
-    <Button onClick={() => logout()} {...restProps}>
+    <Button onClick={handleLogout} {...restProps}>
       {children}
     </Button>
   );

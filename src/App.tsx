@@ -1,10 +1,13 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import BlockingRoute from "./components/blockingRoute";
+import PrivateRoute from "./components/privateRoute";
 import NavbarContainer from "./containers/navbarContainer";
 import AuthContainer from "./context/auth";
 import Theme from "./context/theme";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
+import ResetPassword from "./pages/auth/resetPassword";
 import Dashboard from "./pages/dashboard";
 
 function App() {
@@ -15,11 +18,14 @@ function App() {
           <NavbarContainer />
 
           <Switch>
-            <Route path="/" exact component={Login} />
+            <Route path="/home" exact component={Login} />
 
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-            <Route path="/dashboard" component={Dashboard} />
+            <BlockingRoute path="/login" component={Login} />
+            <BlockingRoute path="/register" component={Register} />
+            <Route path="/reset-password" component={ResetPassword} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/profile" component={Dashboard} />
+            <PrivateRoute path="/chat" component={Dashboard} />
           </Switch>
         </AuthContainer>
       </Theme>

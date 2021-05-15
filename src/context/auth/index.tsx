@@ -19,6 +19,7 @@ interface IAuthContext {
     password: string
   ): Promise<firebase.auth.UserCredential>;
   logout(): Promise<void>;
+  resetPassword(email: string): Promise<void>;
 }
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
@@ -43,7 +44,12 @@ const AuthContainer = ({ children }: ChildProps) => {
     return auth.signInWithEmailAndPassword(email, password);
   }
 
+  function resetPassword(email: string) {
+    return auth.sendPasswordResetEmail(email);
+  }
+
   function logout() {
+    setCurrentUser(null);
     return auth.signOut();
   }
 
@@ -68,6 +74,7 @@ const AuthContainer = ({ children }: ChildProps) => {
         registerEmailPassword,
         logout,
         loginWithEmailPassword,
+        resetPassword,
       }}
     >
       {!loading && children}

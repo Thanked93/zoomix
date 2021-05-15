@@ -6,11 +6,9 @@ import { Content, Footer, FooterLink, Outer, Title } from "../styles";
 
 const Register = () => {
   const [email, setEmail] = useState("");
-  const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
   const [confPassword, setConfPassword] = useState("");
-  const [confPasswordError, setConfPasswordError] = useState("");
+  const [error, setError] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -21,17 +19,14 @@ const Register = () => {
   async function submit(e: React.SyntheticEvent) {
     e.preventDefault();
     if (password !== confPassword) {
-      return setConfPasswordError("Passwords do not match.");
+      return setError("Passwords do not match.");
     }
     try {
       setLoading(true);
-      setConfPasswordError("");
-      setPasswordError("");
-      setEmailError("");
       await registerEmailPassword(email, password);
       history.push("/dashboard");
     } catch (error) {
-      console.log(error);
+      setError("Authentiction failed.");
       setLoading(false);
     }
   }
@@ -45,22 +40,20 @@ const Register = () => {
             value={email}
             placeholder="Email"
             onChange={setEmail}
-            error={emailError}
           />
           <CustomForm.Input
             value={password}
             onChange={setPassword}
             placeholder="Password"
             type="password"
-            error={passwordError}
           />
           <CustomForm.Input
             value={confPassword}
             placeholder="Confirm password"
             onChange={setConfPassword}
             type="password"
-            error={confPasswordError}
           />
+          <CustomForm.Message isError={true}>{error}</CustomForm.Message>
           <CustomForm.SubmitButton disabled={loading}>
             submit
           </CustomForm.SubmitButton>

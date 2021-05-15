@@ -3,7 +3,7 @@ import Navbar from "../../components/navbar";
 import { useAuth } from "../../context/auth";
 
 const NavbarContainer = () => {
-  const { currentUser, logout } = useAuth();
+  const { currentUser } = useAuth();
 
   return (
     <Navbar>
@@ -14,27 +14,25 @@ const NavbarContainer = () => {
           {currentUser ? (
             <>
               <Navbar.Item>
-                <Navbar.Link>Dashboard</Navbar.Link>
+                <Navbar.Link to="/dashboard">Dashboard</Navbar.Link>
               </Navbar.Item>
               <Navbar.Item>
-                <Navbar.Link>Chats</Navbar.Link>
+                <Navbar.Link to="/chat">Chats</Navbar.Link>
               </Navbar.Item>
               <Navbar.Item>
-                <Navbar.Link>Profile</Navbar.Link>
+                <Navbar.Link to="/profile">Profile</Navbar.Link>
               </Navbar.Item>
               <Navbar.Item>
-                <Navbar.Link>Logout</Navbar.Link>
+                <Navbar.Logout>Logout</Navbar.Logout>
               </Navbar.Item>
             </>
           ) : (
             <>
               <Navbar.Item>
-                <Navbar.Link>Login</Navbar.Link>
+                <Navbar.Link to="/login">Login</Navbar.Link>
               </Navbar.Item>
               <Navbar.Item>
-                <Navbar.Logout logout={logout}>
-                  <Navbar.Link>Register</Navbar.Link>
-                </Navbar.Logout>
+                <Navbar.Link to="/register">Register</Navbar.Link>
               </Navbar.Item>
             </>
           )}

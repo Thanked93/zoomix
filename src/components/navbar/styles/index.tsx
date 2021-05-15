@@ -102,4 +102,29 @@ export const Button = styled.button`
   border: none;
   color: white;
   outline: none;
+  background-color: transparent;
+  font-size: ${(props) => props.theme.fontSizes.small};
+  margin: 0 5px;
+  margin-right: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+
+  &:after {
+    display: block;
+    content: "";
+    border-bottom: solid 3px ${(props) => props.theme.colors.blue};
+    transform: scaleX(0);
+    transition: transform 250ms ease-in-out;
+    transform-origin: 0% 50%;
+  }
+
+  &:hover:after {
+    transform: scaleX(1);
+  }
+
+  @media (max-width: 768px) {
+    text-align: center;
+    margin-right: 5px;
+  }
 `;
