@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useHistory } from "react-router";
 import CustomForm from "../../../components/customForm";
 import { useAuth } from "../../../context/auth";
+import GoogleButton from "react-google-button";
+
 import { Content, Footer, FooterLink, Outer, Title } from "../styles";
 
 const Login: React.FC = () => {
@@ -14,7 +16,7 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   //
-  const { loginWithEmailPassword } = useAuth();
+  const { loginWithEmailPassword, loginWithGoogle } = useAuth();
   const history = useHistory();
 
   //Submit
@@ -35,7 +37,7 @@ const Login: React.FC = () => {
   return (
     <Outer>
       <Content>
-        <Title>Login</Title>
+        <Title>Sign in</Title>
         <CustomForm onSubmit={submit}>
           <CustomForm.Input
             value={email}
@@ -59,10 +61,12 @@ const Login: React.FC = () => {
             </FooterLink>
           )}
           <CustomForm.SubmitButton disabled={loading}>
-            submit
+            Submit
           </CustomForm.SubmitButton>
         </CustomForm>
-
+        <GoogleButton type="dark" onClick={async () => await loginWithGoogle()}>
+          Sign in with Google
+        </GoogleButton>
         <Footer>
           Don't have an account yet?{" "}
           <FooterLink to="/register">Register</FooterLink>

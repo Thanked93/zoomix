@@ -9,6 +9,7 @@ import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
 import ResetPassword from "./pages/auth/resetPassword";
 import Dashboard from "./pages/dashboard";
+import Profile from "./pages/profile";
 
 function App() {
   return (
@@ -24,7 +25,7 @@ function App() {
             <BlockingRoute path="/register" component={Register} />
             <Route path="/reset-password" component={ResetPassword} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
-            <PrivateRoute path="/profile" component={Dashboard} />
+            <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/chat" component={Dashboard} />
           </Switch>
         </AuthContainer>

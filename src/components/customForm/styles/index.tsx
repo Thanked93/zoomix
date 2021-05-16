@@ -12,7 +12,8 @@ export const Button = styled.button`
   display: flex;
   margin-top: 2em;
   padding: 0.5em 0.25em;
-  width: 120px;
+  width: 240px;
+  height: 3em;
   justify-content: center;
   align-items: center;
   font-weight: 600;

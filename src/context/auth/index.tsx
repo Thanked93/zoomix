@@ -14,6 +14,7 @@ interface IAuthContext {
     email: string,
     password: string
   ): Promise<firebase.auth.UserCredential>;
+  loginWithGoogle(): Promise<firebase.auth.UserCredential>;
   registerEmailPassword(
     email: string,
     password: string
@@ -38,6 +39,12 @@ const AuthContainer = ({ children }: ChildProps) => {
 
   function registerEmailPassword(email: string, password: string) {
     return auth.createUserWithEmailAndPassword(email, password);
+  }
+
+  function loginWithGoogle() {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.useDeviceLanguage();
+    return auth.signInWithPopup(provider);
   }
 
   function loginWithEmailPassword(email: string, password: string) {
@@ -70,6 +77,7 @@ const AuthContainer = ({ children }: ChildProps) => {
   return (
     <AuthContext.Provider
       value={{
+        loginWithGoogle,
         currentUser,
         registerEmailPassword,
         logout,

@@ -9,6 +9,9 @@ export const Outer = styled.div`
 `;
 
 export const Content = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   background-color: ${(props) => props.theme.colors.white};
   border: 3px solid ${(props) => props.theme.colors.blue};
   padding: 1em 2em;
@@ -24,6 +27,7 @@ export const Title = styled.h1`
 
 export const Footer = styled.div`
   padding-top: 1em;
+  margin-top: 1em;
   padding-bottom: 0.5em;
   font-size: ${(props) => props.theme.fontSizes.small};
 `;
