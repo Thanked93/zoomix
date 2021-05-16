@@ -4,6 +4,7 @@ import BlockingRoute from "./components/blockingRoute";
 import PrivateRoute from "./components/privateRoute";
 import NavbarContainer from "./containers/navbarContainer";
 import AuthContainer from "./context/auth";
+import PeerConnection from "./context/peerConnection";
 import Theme from "./context/theme";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
@@ -24,9 +25,11 @@ function App() {
             <BlockingRoute path="/login" component={Login} />
             <BlockingRoute path="/register" component={Register} />
             <Route path="/reset-password" component={ResetPassword} />
-            <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/profile" component={Profile} />
             <PrivateRoute path="/chat" component={Dashboard} />
+            <PeerConnection>
+              <PrivateRoute path="/dashboard" component={Dashboard} />
+            </PeerConnection>
           </Switch>
         </AuthContainer>
       </Theme>
