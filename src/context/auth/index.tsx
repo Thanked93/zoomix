@@ -6,7 +6,8 @@ import React, {
   useEffect,
 } from "react";
 import firebase from "firebase";
-import { auth } from "../../firebase";
+
+import { auth, db } from "../../firebase";
 
 interface IAuthContext {
   currentUser: firebase.User | null;
@@ -59,6 +60,17 @@ const AuthContainer = ({ children }: ChildProps) => {
     setCurrentUser(null);
     return auth.signOut();
   }
+
+  const update = async (userId: string) => {
+    const currentUser = db
+      .collection("users")
+      .get()
+      .then((snapShot) => {
+        snapShot.docs.forEach((doc) => {
+          console.log(doc);
+        });
+      });
+  };
 
   /**
    * Firebase basic stateChecking
