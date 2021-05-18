@@ -32,6 +32,10 @@ A simple chat & video application.\
 
 If you have any questions hit me up.
 
+## Changes
+ I will remake the navbar for smaller display, so that the "menu" flies from left into the screen. + absolute position
+
+
 ## Before you get started
 1.  Create a firebase project.\
 1.1 Dont remove localhost of the white list.
