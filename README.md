@@ -32,7 +32,7 @@ A simple chat & video application.\
 
 If you have any questions hit me up.
 
-##Before you get started
+## Before you get started
 1.  Create a firebase project
 1.1 Dont remove localhost of the white list.
 2.  Create a .env.local file and put your keys for development into that.
