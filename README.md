@@ -1,3 +1,48 @@
+# Zoomix
+
+A simple chat & video application.\
+ technologies: React, styled-components, WebRTC, "firebase"
+ 
+ 
+ ## Roadmap
+ 
+  ### Design
+  
+  Will be a responsive design,so smartphone and tablet users are able to join meetings too.
+
+  
+ ### Authentication
+ 
+ Via random email and password\
+ Via google account
+ 
+ If you forgot your password, no Problem we got your back.
+ 
+ ### Connections
+ Via WebRTC
+ Firebase-database
+  
+ ### Chat
+ firestore (listeners)
+  
+  
+ ### Profile related stuff
+ Probably changing the display name or other basics
+  
+
+If you have any questions hit me up.
+
+## Changes
+ I will remake the navbar for smaller display, so that the "menu" flies from left into the screen. + absolute position
+
+
+## Before you get started
+1.  Create a firebase project.\
+1.1 Dont remove localhost of the white list.
+2.  Create a .env.local file and put your keys for development into that.\
+2.1 Remeber each entry looks like REACT_APP_API_KEY=<VALUE>
+3.  Init the project with yarn start or npm install
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
