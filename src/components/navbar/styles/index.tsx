@@ -33,6 +33,7 @@ export const Toggle = styled.div`
     cursor: pointer;
   }
   @media (max-width: 768px) {
+    position: absolute;
     display: flex;
     align-items: center;
   }
@@ -47,7 +48,10 @@ export const ToggleBar = styled.span`
 
 export const Menu = styled.div<{ active: boolean }>`
   @media (max-width: 768px) {
+    position: absolute;
     display: ${({ active }) => (active ? "flex" : "none")};
+    background-color: ${(props) => props.theme.colors.dark};
+    top: 4em;
     width: 100%;
     padding-bottom: 5px;
   }

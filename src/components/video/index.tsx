@@ -11,14 +11,10 @@ const Video = ({ children, ...restProps }: ChildProps) => {
 
 interface StreamProps {
   stream: MediaStream;
-  muted: boolean;
+  muted?: boolean;
 }
 
-Video.Stream = function VideoStream({
-  stream,
-  muted,
-  ...restProps
-}: StreamProps) {
+Video.Stream = function VideoStream({ stream, muted = false, ...restProps }: StreamProps) {
   const ref = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(false);
 
@@ -30,10 +26,7 @@ Video.Stream = function VideoStream({
   return <VideoDisplay ref={ref} muted={isMuted} autoPlay {...restProps} />;
 };
 
-Video.UserLabel = function VideoUserLabel({
-  children,
-  ...restProps
-}: ChildProps) {
+Video.UserLabel = function VideoUserLabel({ children, ...restProps }: ChildProps) {
   return <UserLabel {...restProps}>{children}</UserLabel>;
 };
 export default Video;

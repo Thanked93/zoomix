@@ -1,17 +1,7 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { useHistory } from "react-router";
 import { useAuth } from "../../context/auth";
-import {
-  Brand,
-  Item,
-  List,
-  Menu,
-  Nav,
-  NavLink,
-  Toggle,
-  ToggleBar,
-  Button,
-} from "./styles";
+import { Brand, Item, List, Menu, Nav, NavLink, Toggle, ToggleBar, Button } from "./styles";
 
 interface ChildProps {
   children: ReactNode;
@@ -29,9 +19,7 @@ const Navbar = ({ children, ...restProps }: ChildProps) => {
 
   return (
     <Nav {...restProps}>
-      <ActiveContext.Provider value={{ active, setActive }}>
-        {children}
-      </ActiveContext.Provider>
+      <ActiveContext.Provider value={{ active, setActive }}>{children}</ActiveContext.Provider>
     </Nav>
   );
 };
@@ -40,11 +28,7 @@ interface LinkProps extends ChildProps {
   to?: string;
 }
 
-Navbar.Brand = function NavbarBrand({
-  children,
-  to = "",
-  ...restProps
-}: LinkProps) {
+Navbar.Brand = function NavbarBrand({ children, to = "", ...restProps }: LinkProps) {
   return (
     <Brand to={to} {...restProps}>
       {children}
@@ -66,11 +50,7 @@ Navbar.Toggle = function NavbarToggle({ ...restProps }) {
 Navbar.Menu = function NavbarMenu({ children, ...restProps }: ChildProps) {
   const { setActive, active } = useContext(ActiveContext);
   return (
-    <Menu
-      onMouseLeave={() => (active ? setActive(!active) : null)}
-      active={active}
-      {...restProps}
-    >
+    <Menu onMouseLeave={() => (active ? setActive(!active) : null)} active={active} {...restProps}>
       {children}
     </Menu>
   );
@@ -82,17 +62,13 @@ Navbar.List = function NavbarList({ children, ...restProps }: ChildProps) {
 
 Navbar.Item = function NavbarItem({ children, ...restProps }: ChildProps) {
   return (
-    <Item className="border" {...restProps}>
+    <Item className='border' {...restProps}>
       {children}
     </Item>
   );
 };
 
-Navbar.Link = function NavbarLink({
-  children,
-  to = "",
-  ...restProps
-}: LinkProps) {
+Navbar.Link = function NavbarLink({ children, to = "", ...restProps }: LinkProps) {
   return (
     <NavLink to={to} {...restProps}>
       {children}
