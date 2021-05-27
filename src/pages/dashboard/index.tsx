@@ -1,11 +1,14 @@
-import React, { useState } from "react";
-import VideoContainer from "../../containers/videoContainer";
-import { useAuth } from "../../context/auth";
+import React from "react";
+import LocalStream from "../../components/localStream";
+import RemoteStream from "../../components/remoteStream";
 
 export const Dashboard: React.FC = () => {
-  const { currentUser } = useAuth();
-
-  return <VideoContainer />;
+  return (
+    <>
+      <LocalStream />
+      <RemoteStream />
+    </>
+  );
 };
 
 export default Dashboard;

@@ -49,6 +49,7 @@ export const ToggleBar = styled.span`
 export const Menu = styled.div<{ active: boolean }>`
   @media (max-width: 768px) {
     position: absolute;
+    z-index: 2;
     display: ${({ active }) => (active ? "flex" : "none")};
     background-color: ${(props) => props.theme.colors.dark};
     top: 4em;
@@ -74,7 +75,7 @@ export const Item = styled.li`
 
   @media (max-width: 768px) {
     text-align: center;
-    font-size: ${(props) => props.theme.fontSizes.small};
+    font-size: ${(props) => props.theme.fontSizes.medium};
   }
 `;
 

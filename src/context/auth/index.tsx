@@ -4,7 +4,7 @@ import firebase from "firebase";
 import { auth, db } from "../../firebase";
 
 interface IAuthContext {
-  currentUser: firebase.User | null;
+  currentUser: User;
   loginWithEmailPassword(email: string, password: string): Promise<firebase.auth.UserCredential>;
   loginWithGoogle(): Promise<firebase.auth.UserCredential>;
   registerEmailPassword(email: string, password: string): Promise<firebase.auth.UserCredential>;
@@ -22,8 +22,15 @@ interface ChildProps {
   children: ReactNode;
 }
 
+interface User {
+  email: string;
+  name: string;
+  uid: string;
+  loggedIn: boolean;
+}
+
 const AuthContainer = ({ children }: ChildProps) => {
-  const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
+  const [currentUser, setCurrentUser] = useState<User>({} as User);
   const [loading, setLoading] = useState(true);
 
   function registerEmailPassword(email: string, password: string) {
@@ -45,7 +52,7 @@ const AuthContainer = ({ children }: ChildProps) => {
   }
 
   function logout() {
-    setCurrentUser(null);
+    setCurrentUser({} as User);
     return auth.signOut();
   }
 
@@ -57,7 +64,13 @@ const AuthContainer = ({ children }: ChildProps) => {
    */
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: firebase.User | null) => {
-      setCurrentUser(user);
+      const current: User = {
+        name: user?.displayName || user?.email || "",
+        email: user?.email || "",
+        loggedIn: true,
+        uid: user?.uid || "",
+      };
+      setCurrentUser(current);
       setLoading(false);
     });
     return unsubscribe;

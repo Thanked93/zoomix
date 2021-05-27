@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useRef, useState } from "react";
-import { Container, UserLabel, VideoDisplay } from "./styles";
+import { CloseButton, Row, CloseWrapper, Container, UserLabel, VideoButton, VideoDisplay } from "./styles";
 
 interface ChildProps {
   children: ReactNode;
@@ -29,4 +29,33 @@ Video.Stream = function VideoStream({ stream, muted = false, ...restProps }: Str
 Video.UserLabel = function VideoUserLabel({ children, ...restProps }: ChildProps) {
   return <UserLabel {...restProps}>{children}</UserLabel>;
 };
+
+interface VideoButtonProps extends ChildProps {
+  func(): void;
+}
+
+Video.Row = ({ children, ...restProps }: ChildProps) => {
+  return <Row {...restProps}>{children}</Row>;
+};
+
+Video.Button = ({ children, func, ...restProps }: VideoButtonProps) => {
+  return (
+    <VideoButton onClick={func} {...restProps}>
+      {children}
+    </VideoButton>
+  );
+};
+
+interface CloseProps {
+  func(): void;
+}
+
+Video.Close = ({ func, ...restProps }: CloseProps) => {
+  return (
+    <CloseWrapper {...restProps}>
+      <CloseButton onClick={func}>X</CloseButton>
+    </CloseWrapper>
+  );
+};
+
 export default Video;

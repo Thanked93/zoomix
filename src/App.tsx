@@ -4,6 +4,7 @@ import BlockingRoute from "./components/blockingRoute";
 import PrivateRoute from "./components/privateRoute";
 import NavbarContainer from "./containers/navbarContainer";
 import AuthContainer from "./context/auth";
+import RtcProvider from "./context/rtc";
 import Theme from "./context/theme";
 import Login from "./pages/auth/login";
 import Register from "./pages/auth/register";
@@ -25,8 +26,10 @@ function App() {
             <BlockingRoute path='/register' component={Register} />
             <Route path='/reset-password' component={ResetPassword} />
             <PrivateRoute path='/profile' component={Profile} />
-            <PrivateRoute path='/chat' component={Dashboard} />
-            <PrivateRoute path='/dashboard' component={Dashboard} />
+            <RtcProvider>
+              <PrivateRoute path='/chat' component={Dashboard} />
+              <PrivateRoute path='/dashboard' component={Dashboard} />
+            </RtcProvider>
           </Switch>
         </AuthContainer>
       </Theme>
