@@ -1,6 +1,4 @@
-import { exception } from "console";
-import React, { createContext, MutableRefObject, ReactNode, useContext, useEffect, useRef, useState } from "react";
-import RemoteStream from "../../components/remoteStream";
+import React, { createContext, ReactNode, useContext, useState } from "react";
 import { db } from "../../firebase";
 
 interface IContext {
@@ -23,7 +21,7 @@ interface Props {
 }
 
 const RtcProvider = ({ children }: Props) => {
-  const [pc, setPc] = useState<RTCPeerConnection>(new RTCPeerConnection(servers));
+  const [pc] = useState<RTCPeerConnection>(new RTCPeerConnection(servers));
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
   const [callId, setCallId] = useState("");
@@ -43,7 +41,7 @@ const RtcProvider = ({ children }: Props) => {
   };
 
   const createCall = async () => {
-    // Reference Firestore collections for signaling
+    // reference the
     const callDoc = db.collection("calls").doc();
     const offerCandidates = callDoc.collection("offerCandidates");
     const answerCandidates = callDoc.collection("answerCandidates");

@@ -1,7 +1,14 @@
 import React from "react";
+import ProfileContainer from "../../containers/profileContainer";
+import { useAuth } from "../../context/auth";
 
 const Profile = () => {
-  return <div>hello from profile </div>;
+  const { currentUser } = useAuth();
+
+  if (currentUser) {
+    return <ProfileContainer currentUser={currentUser} />;
+  }
+  return <div>Hello</div>;
 };
 
 export default Profile;

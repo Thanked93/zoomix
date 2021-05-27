@@ -1,10 +1,9 @@
-import React, { createContext, ReactNode, useContext, useState, useEffect } from "react";
 import firebase from "firebase";
-
-import { auth, db } from "../../firebase";
+import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
+import { auth } from "../../firebase";
 
 interface IAuthContext {
-  currentUser: User;
+  currentUser: firebase.User | null;
   loginWithEmailPassword(email: string, password: string): Promise<firebase.auth.UserCredential>;
   loginWithGoogle(): Promise<firebase.auth.UserCredential>;
   registerEmailPassword(email: string, password: string): Promise<firebase.auth.UserCredential>;
@@ -22,15 +21,8 @@ interface ChildProps {
   children: ReactNode;
 }
 
-interface User {
-  email: string;
-  name: string;
-  uid: string;
-  loggedIn: boolean;
-}
-
 const AuthContainer = ({ children }: ChildProps) => {
-  const [currentUser, setCurrentUser] = useState<User>({} as User);
+  const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
   const [loading, setLoading] = useState(true);
 
   function registerEmailPassword(email: string, password: string) {
@@ -52,7 +44,7 @@ const AuthContainer = ({ children }: ChildProps) => {
   }
 
   function logout() {
-    setCurrentUser({} as User);
+    setCurrentUser(null);
     return auth.signOut();
   }
 
@@ -64,13 +56,7 @@ const AuthContainer = ({ children }: ChildProps) => {
    */
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user: firebase.User | null) => {
-      const current: User = {
-        name: user?.displayName || user?.email || "",
-        email: user?.email || "",
-        loggedIn: true,
-        uid: user?.uid || "",
-      };
-      setCurrentUser(current);
+      setCurrentUser(user);
       setLoading(false);
     });
     return unsubscribe;
