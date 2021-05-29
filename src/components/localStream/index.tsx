@@ -6,16 +6,19 @@ import Video from "../video";
 
 const LocalStream = () => {
   const { room } = useAuth();
-  const { localStream, pc, initLocalStream } = useRtc();
+  const { localStream, pc, initLocalStream, closeMyConnection } = useRtc();
   const [input, setInput] = useState("");
 
-  useEffect(() => {}, [localStream]);
+  useEffect(() => {
+    console.log("changing streams");
+  }, [localStream]);
 
   if (!localStream) return <button onClick={initLocalStream}>init</button>;
 
   return (
     <>
       <Video>
+        <Video.Close func={closeMyConnection} />
         <Video.Stream stream={localStream!} />
       </Video>
       <label>{room.room}</label>

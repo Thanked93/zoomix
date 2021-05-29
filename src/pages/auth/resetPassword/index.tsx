@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import CustomForm from "../../../components/customForm";
-import { useAuth } from "../../../context/auth";
-import { Content, Footer, FooterLink, Outer, Title } from "../styles";
 import { resetPassword } from "../../../firebase/auth";
+import { Content, Footer, FooterLink, Outer, Title } from "../styles";
 
 const ResetPassword = () => {
   const [email, setEmail] = useState("");

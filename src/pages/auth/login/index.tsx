@@ -1,10 +1,8 @@
 import React, { useState } from "react";
+import GoogleButton from "react-google-button";
 import { useHistory } from "react-router";
 import CustomForm from "../../../components/customForm";
-import { useAuth } from "../../../context/auth";
-import GoogleButton from "react-google-button";
 import { loginWithEmailPassword, loginWithGoogle } from "../../../firebase/auth";
-
 import { Content, Footer, FooterLink, Outer, Title } from "../styles";
 
 const Login: React.FC = () => {

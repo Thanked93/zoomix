@@ -1,12 +1,6 @@
 import firebase from "firebase";
 import { db } from "../../firebase";
 
-interface UserData {
-  room: string;
-  friends: [];
-  password: string;
-}
-
 export const getUserData = async (user: firebase.User) => {
   try {
     const roomsRef = db.collection("rooms");

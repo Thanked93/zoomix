@@ -1,7 +1,6 @@
-import React from "react";
 import firebase from "firebase";
+import React from "react";
 import ProfileStats from "../../components/profileStats";
-import { ChangeButton } from "../../components/profileStats/styles";
 
 interface ProfileContainerProps {
   currentUser: firebase.User;

@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router";
 import CustomForm from "../../../components/customForm";
-import { useAuth } from "../../../context/auth";
-import { Content, Footer, FooterLink, Outer, Title } from "../styles";
 import { registerEmailPassword } from "../../../firebase/auth";
+import { Content, Footer, FooterLink, Outer, Title } from "../styles";
 
 const Register = () => {
   const [email, setEmail] = useState("");
