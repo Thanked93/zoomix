@@ -1,15 +1,8 @@
 import firebase from "firebase";
 import React, { createContext, ReactNode, useContext, useEffect, useState } from "react";
 import { auth } from "../../firebase";
-
-interface IAuthContext {
-  currentUser: firebase.User | null;
-  loginWithEmailPassword(email: string, password: string): Promise<firebase.auth.UserCredential>;
-  loginWithGoogle(): Promise<firebase.auth.UserCredential>;
-  registerEmailPassword(email: string, password: string): Promise<firebase.auth.UserCredential>;
-  logout(): Promise<void>;
-  resetPassword(email: string): Promise<void>;
-}
+import { getUserData } from "../../firebase/collection";
+import { Friend, IAuthContext, Room } from "./interfaces";
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
@@ -23,40 +16,22 @@ interface ChildProps {
 
 const AuthContainer = ({ children }: ChildProps) => {
   const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
+  const [room, setRoom] = useState<Room>({} as Room);
+  const [friends, setFriends] = useState<Array<Friend>>([] as Array<Friend>);
   const [loading, setLoading] = useState(true);
-
-  function registerEmailPassword(email: string, password: string) {
-    return auth.createUserWithEmailAndPassword(email, password);
-  }
-
-  function loginWithGoogle() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.useDeviceLanguage();
-    return auth.signInWithPopup(provider);
-  }
-
-  function loginWithEmailPassword(email: string, password: string) {
-    return auth.signInWithEmailAndPassword(email, password);
-  }
-
-  function resetPassword(email: string) {
-    return auth.sendPasswordResetEmail(email);
-  }
-
-  function logout() {
-    setCurrentUser(null);
-    return auth.signOut();
-  }
-
-  const update = async (userId: string) => {};
 
   /**
    * Firebase basic stateChecking
    * Loads on mounting
    */
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user: firebase.User | null) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user: firebase.User | null) => {
       setCurrentUser(user);
+      if (user) {
+        const { room, friends, password } = await getUserData(user);
+        setFriends([friends]);
+        setRoom({ room, password });
+      }
       setLoading(false);
     });
     return unsubscribe;
@@ -65,12 +40,9 @@ const AuthContainer = ({ children }: ChildProps) => {
   return (
     <AuthContext.Provider
       value={{
-        loginWithGoogle,
         currentUser,
-        registerEmailPassword,
-        logout,
-        loginWithEmailPassword,
-        resetPassword,
+        room,
+        friends,
       }}
     >
       {!loading && children}

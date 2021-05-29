@@ -1,5 +1,6 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { db } from "../../firebase";
+import { useAuth } from "../auth";
 
 interface IContext {
   pc: RTCPeerConnection;
@@ -21,6 +22,7 @@ interface Props {
 }
 
 const RtcProvider = ({ children }: Props) => {
+  const { room } = useAuth();
   const [pc] = useState<RTCPeerConnection>(new RTCPeerConnection(servers));
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
   const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
@@ -42,7 +44,7 @@ const RtcProvider = ({ children }: Props) => {
 
   const createCall = async () => {
     // reference the
-    const callDoc = db.collection("calls").doc();
+    const callDoc = db.collection("calls").doc(room.room);
     const offerCandidates = callDoc.collection("offerCandidates");
     const answerCandidates = callDoc.collection("answerCandidates");
 

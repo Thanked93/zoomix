@@ -1,7 +1,8 @@
 import React, { createContext, ReactNode, useContext, useState } from "react";
 import { useHistory } from "react-router";
-import { useAuth } from "../../context/auth";
 import { Brand, Item, List, Menu, Nav, NavLink, Toggle, ToggleBar, Button } from "./styles";
+
+import { logout } from "../../firebase/auth";
 
 interface ChildProps {
   children: ReactNode;
@@ -77,7 +78,6 @@ Navbar.Link = function NavbarLink({ children, to = "", ...restProps }: LinkProps
 };
 
 Navbar.Logout = function NavbarButton({ children, ...restProps }: ChildProps) {
-  const { logout } = useAuth();
   const history = useHistory();
 
   async function handleLogout() {

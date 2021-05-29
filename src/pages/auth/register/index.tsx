@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import CustomForm from "../../../components/customForm";
 import { useAuth } from "../../../context/auth";
 import { Content, Footer, FooterLink, Outer, Title } from "../styles";
+import { registerEmailPassword } from "../../../firebase/auth";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -11,8 +12,6 @@ const Register = () => {
   const [error, setError] = useState("");
 
   const [loading, setLoading] = useState(false);
-
-  const { registerEmailPassword } = useAuth();
 
   const history = useHistory();
 
@@ -36,30 +35,19 @@ const Register = () => {
       <Content>
         <Title>Register</Title>
         <CustomForm onSubmit={submit}>
-          <CustomForm.Input
-            value={email}
-            placeholder="Email"
-            onChange={setEmail}
-          />
-          <CustomForm.Input
-            value={password}
-            onChange={setPassword}
-            placeholder="Password"
-            type="password"
-          />
+          <CustomForm.Input value={email} placeholder='Email' onChange={setEmail} />
+          <CustomForm.Input value={password} onChange={setPassword} placeholder='Password' type='password' />
           <CustomForm.Input
             value={confPassword}
-            placeholder="Confirm password"
+            placeholder='Confirm password'
             onChange={setConfPassword}
-            type="password"
+            type='password'
           />
           <CustomForm.Message isError={true}>{error}</CustomForm.Message>
-          <CustomForm.SubmitButton disabled={loading}>
-            submit
-          </CustomForm.SubmitButton>
+          <CustomForm.SubmitButton disabled={loading}>submit</CustomForm.SubmitButton>
         </CustomForm>
         <Footer>
-          Already have an account? <FooterLink to="/login">Login</FooterLink>
+          Already have an account? <FooterLink to='/login'>Login</FooterLink>
         </Footer>
       </Content>
     </Outer>

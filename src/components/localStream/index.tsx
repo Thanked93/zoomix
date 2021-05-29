@@ -3,10 +3,12 @@ import { useRtc } from "../../context/rtc";
 import Video from "../video";
 
 const LocalStream = () => {
-  const { localStream, callId, answerCall, createCall } = useRtc();
+  const { localStream, callId, answerCall, createCall, initLocalStream } = useRtc();
   const [input, setInput] = useState("");
 
   useEffect(() => {}, [localStream]);
+
+  if (!localStream) return <button onClick={initLocalStream}>init</button>;
 
   return (
     <>

@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import CustomForm from "../../../components/customForm";
 import { useAuth } from "../../../context/auth";
 import GoogleButton from "react-google-button";
+import { loginWithEmailPassword, loginWithGoogle } from "../../../firebase/auth";
 
 import { Content, Footer, FooterLink, Outer, Title } from "../styles";
 
@@ -16,7 +17,6 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
 
   //
-  const { loginWithEmailPassword, loginWithGoogle } = useAuth();
   const history = useHistory();
 
   //Submit
@@ -39,37 +39,22 @@ const Login: React.FC = () => {
       <Content>
         <Title>Sign in</Title>
         <CustomForm onSubmit={submit}>
-          <CustomForm.Input
-            value={email}
-            placeholder="Email"
-            onChange={setEmail}
-          />
-          <CustomForm.Input
-            value={password}
-            placeholder="Password"
-            type="password"
-            onChange={setPassword}
-          />
+          <CustomForm.Input value={email} placeholder='Email' onChange={setEmail} />
+          <CustomForm.Input value={password} placeholder='Password' type='password' onChange={setPassword} />
           <CustomForm.Message isError={true}>{error}</CustomForm.Message>
 
           {error && (
-            <FooterLink
-              to="/reset-password"
-              style={{ width: "100%", marginTop: "1em" }}
-            >
+            <FooterLink to='/reset-password' style={{ width: "100%", marginTop: "1em" }}>
               Reset password
             </FooterLink>
           )}
-          <CustomForm.SubmitButton disabled={loading}>
-            Submit
-          </CustomForm.SubmitButton>
+          <CustomForm.SubmitButton disabled={loading}>Submit</CustomForm.SubmitButton>
         </CustomForm>
-        <GoogleButton type="dark" onClick={async () => await loginWithGoogle()}>
+        <GoogleButton type='dark' onClick={async () => await loginWithGoogle()}>
           Sign in with Google
         </GoogleButton>
         <Footer>
-          Don't have an account yet?{" "}
-          <FooterLink to="/register">Register</FooterLink>
+          Don't have an account yet? <FooterLink to='/register'>Register</FooterLink>
         </Footer>
       </Content>
     </Outer>
