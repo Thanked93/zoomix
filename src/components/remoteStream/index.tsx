@@ -13,14 +13,20 @@ const RemoteStream = () => {
 
   pc.ontrack = (e) => {
     e.streams[0].getTracks().forEach((track) => {
-      remoteStream!.addTrack(track);
+      remoteStream.forEach((stream) => stream.addTrack(track));
     });
   };
 
   return (
-    <Video>
-      <Video.Stream stream={remoteStream!} />
-    </Video>
+    <>
+      {remoteStream.forEach((stream) => {
+        return (
+          <Video>
+            <Video.Stream stream={stream!} />
+          </Video>
+        );
+      })}
+    </>
   );
 };
 
