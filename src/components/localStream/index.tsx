@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useAuth } from "../../context/auth";
 import { useRtc } from "../../context/rtc";
-import { createCall, answerCall } from "../../rtc";
+import { answerCall, createCall } from "../../rtc";
 import Video from "../video";
 
 const LocalStream = () => {
   const { room } = useAuth();
-  const { pc, localStream, initLocalStream } = useRtc();
+  const { localStream, pc, initLocalStream } = useRtc();
   const [input, setInput] = useState("");
 
   useEffect(() => {}, [localStream]);

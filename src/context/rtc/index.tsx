@@ -5,7 +5,7 @@ import { useAuth } from "../auth";
 interface IContext {
   pc: RTCPeerConnection;
   localStream: MediaStream | null;
-  remoteStream: Array<MediaStream>;
+  remoteStream: MediaStream | null;
   initLocalStream(): Promise<void>;
 }
 const RtcContext = createContext<IContext>({} as IContext);
@@ -19,10 +19,9 @@ interface Props {
 }
 
 const RtcProvider = ({ children }: Props) => {
-  const { room } = useAuth();
   const [pc] = useState<RTCPeerConnection>(new RTCPeerConnection(servers));
   const [localStream, setLocalStream] = useState<MediaStream | null>(null);
-  const [remoteStream, setRemoteStream] = useState<Array<MediaStream>>([]);
+  const [remoteStream, setRemoteStream] = useState<MediaStream | null>(null);
 
   const initLocalStream = async () => {
     try {
@@ -33,7 +32,7 @@ const RtcProvider = ({ children }: Props) => {
         pc.addTrack(track, ls);
       });
 
-      setRemoteStream([new MediaStream()]);
+      setRemoteStream(new MediaStream());
     } catch (error) {
       console.log(error);
     }
